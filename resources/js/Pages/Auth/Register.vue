@@ -1,21 +1,21 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import { Head, Link, useForm } from "@inertiajs/vue3";
 
 const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
 });
 
 const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+    form.post(route("register"), {
+        onFinish: () => form.reset("password", "password_confirmation"),
     });
 };
 </script>
@@ -24,90 +24,116 @@ const submit = () => {
     <GuestLayout>
         <Head title="Register" />
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
+        <div
+            class="w-full max-w-md rounded-2xl border border-white/10 bg-[#0B0F19] p-8 shadow-2xl"
+        >
+            <!-- HEADER -->
+            <h1 class="text-xl font-semibold text-white text-center">
+                Create account
+            </h1>
 
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
+            <p class="text-sm text-gray-500 text-center mt-1 mb-6">
+                Start building your workspace
+            </p>
 
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
+            <form @submit.prevent="submit" class="space-y-4">
+                <!-- NAME -->
+                <div>
+                    <InputLabel for="name" value="Name" class="text-gray-400" />
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+                    <TextInput
+                        id="name"
+                        type="text"
+                        v-model="form.name"
+                        required
+                        autofocus
+                        autocomplete="name"
+                        class="mt-1 block w-full rounded-lg border border-white/10 bg-[#111827] text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    />
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
+                    <InputError class="mt-2" :message="form.errors.name" />
+                </div>
 
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+                <!-- EMAIL -->
+                <div>
+                    <InputLabel
+                        for="email"
+                        value="Email"
+                        class="text-gray-400"
+                    />
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                    <TextInput
+                        id="email"
+                        type="email"
+                        v-model="form.email"
+                        required
+                        autocomplete="username"
+                        class="mt-1 block w-full rounded-lg border border-white/10 bg-[#111827] text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    />
 
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
+                    <InputError class="mt-2" :message="form.errors.email" />
+                </div>
 
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+                <!-- PASSWORD -->
+                <div>
+                    <InputLabel
+                        for="password"
+                        value="Password"
+                        class="text-gray-400"
+                    />
 
-            <div class="mt-4">
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password"
-                />
+                    <TextInput
+                        id="password"
+                        type="password"
+                        v-model="form.password"
+                        required
+                        autocomplete="new-password"
+                        class="mt-1 block w-full rounded-lg border border-white/10 bg-[#111827] text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    />
 
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
+                    <InputError class="mt-2" :message="form.errors.password" />
+                </div>
 
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.password_confirmation"
-                />
-            </div>
+                <!-- CONFIRM PASSWORD -->
+                <div>
+                    <InputLabel
+                        for="password_confirmation"
+                        value="Confirm Password"
+                        class="text-gray-400"
+                    />
 
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    :href="route('login')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-                >
-                    Already registered?
-                </Link>
+                    <TextInput
+                        id="password_confirmation"
+                        type="password"
+                        v-model="form.password_confirmation"
+                        required
+                        autocomplete="new-password"
+                        class="mt-1 block w-full rounded-lg border border-white/10 bg-[#111827] text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    />
 
-                <PrimaryButton
-                    class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Register
-                </PrimaryButton>
-            </div>
-        </form>
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.password_confirmation"
+                    />
+                </div>
+
+                <!-- ACTIONS -->
+                <div class="flex items-center justify-between pt-2">
+                    <Link
+                        :href="route('login')"
+                        class="text-xs text-gray-500 hover:text-white transition"
+                    >
+                        Already registered?
+                    </Link>
+
+                    <PrimaryButton
+                        :disabled="form.processing"
+                        class="rounded-lg bg-blue-600 px-5 py-2 text-white text-sm font-medium hover:bg-blue-500 transition disabled:opacity-50"
+                    >
+                        Register
+                    </PrimaryButton>
+                </div>
+            </form>
+        </div>
     </GuestLayout>
 </template>
